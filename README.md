@@ -67,18 +67,22 @@ src/styles/        global.css
 （消费方 zeus/loom/atlas/agent-world/job-agent、部署形态）。未编造用户数、客户
 logo、评价、定价或性能数字；隐私/服务条款为占位文案，上线前需定稿。
 
-## 部署（待办，尚未配置）
+## 部署（Cloudflare Pages，Git 集成）
 
-参照 loom-landing / agent-world-landing 的 Cloudflare Pages Git 集成模式，上线还差：
+已上线：
 
-1. 建远端仓库：GitHub `bayernjf/model-hub-landing`，推送 `main` / `dev`。
-2. 建 Cloudflare Pages 项目 `model-hub-landing` 并连接该仓库：
-   - Production branch：`main`
-   - Build command：`npx playwright install chromium && npm run build`
-   - Build output directory：`dist`
-   - Environment variables：`NODE_VERSION = 22`、`PLAYWRIGHT_BROWSERS_PATH = 0`
-3. 绑域名：DNS 加 `CNAME model-hub → model-hub-landing.pages.dev`（Proxied）。
-4. 域名定稿后回改 `src/consts.ts` 的 `SITE_URL` 与 `public/robots.txt` 的 Sitemap 地址。
+- GitHub：`bayernjf/model-hub-landing`（public），`main` 生产、`dev` 日常开发
+- Pages 项目 `model-hub-landing`，已连接仓库，推送 `main` 自动构建发版，其它分支出 preview
+  - Build command：`npx playwright install chromium && npm run build`
+  - Build output directory：`dist`
+  - Environment variables：`NODE_VERSION = 22`、`PLAYWRIGHT_BROWSERS_PATH = 0`
+- 站点：`https://model-hub-landing.pages.dev`
+
+待办：
+
+- 自定义域名 `model-hub.bayjf.com`〔**待域名确认**〕：Pages 加 Custom Domain，
+  DNS 加 `CNAME model-hub → model-hub-landing.pages.dev`（Proxied）。
+- 域名定稿后同步 `src/consts.ts` 的 `SITE_URL` 与 `public/robots.txt` 的 Sitemap 地址。
 
 ## SEO
 
