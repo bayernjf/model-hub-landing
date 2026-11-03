@@ -1,0 +1,32 @@
+# Model Hub — One control plane for every model your projects run
+
+Model Hub is a self-hosted, single-owner **model control plane**. Register provider credentials once, maintain one catalog across five modalities, and assign models to projects many-to-many. Each project pulls its own projection with a token — then calls the provider directly. Inference traffic never passes through the hub.
+
+> The hub is not an inference gateway: it proxies no traffic, streams nothing, and bills nothing. End-user BYOK keys stay inside each project; the hub never sees them.
+
+## Core capabilities
+
+- **Provider vault**: presets for Ark Plan, Ark Platform, Agnes, Anthropic, OpenAI and OpenSpeech. Credentials are sealed with AES-256-GCM envelope encryption (`enc$v1$<kid>$<iv>$<ct>`), shown masked, rotatable, and verifiable with an L1 connection test.
+- **Five-modality catalog**: text / image / video / audio / embedding, multi-dimensional pricing, endpoint and dialect adapters, LiteLLM-compatible naming. Preset entries are opt-in under a strict overlay.
+- **Assignments & budgets**: models map to projects many-to-many with primary/fallback roles, per-project aliases and daily budgets; one batch save bumps the catalog revision. Over-budget calls route to a fallback, trip a circuit breaker, or stop at the kill switch.
+- **Distribution & resilience**: `GET /pub/v1/models` (Bearer token, revision/ETag/304); a 0600 local cache keeps every project running even when the hub is down.
+- **Cost governance**: `GET /pub/v1/usage/summary` budget readouts, watermark alert webhooks, and a cost board aggregated by project × source × day × model. Builtin models cost money; BYOK is metered only.
+
+## Workflow
+
+Register provider credentials (verify with L1) → curate the catalog → register projects (hashed tokens, plaintext shown once) → assign with guardrails (roles / aliases / daily budgets, batch save) → projects pull the projection via model-kit (ETag/304, 0600 cache), call providers directly and report usage back → watch costs and budget watermarks on the console, run L1–L4 health checks.
+
+## Key differentiators
+
+- Unlike inference gateways, the hub only hands out the projection of which models a project may use; projects call providers directly.
+- Unlike multi-tenant SaaS, it is a single-owner self-hosted service: `docker compose up`, bound to 127.0.0.1, designed for internal / Tailscale exposure behind Caddy HTTPS.
+- The project-side model-kit falls back to its local 0600 cache when the hub is down, so a config-plane failure never becomes an inference failure.
+
+## Status
+
+v0.1. Running in the owner's multi-project environment: zeus, loom, atlas, agent-world and job-agent read their model configuration from a single hub.
+
+## Links
+
+- Landing: https://model-hub.bayjf.com (English) · https://model-hub.bayjf.com/zh/ (简体中文) [domain pending confirmation]
+- Repository: https://github.com/bayernjf/model-hub

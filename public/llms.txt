@@ -1,0 +1,32 @@
+# Model Hub — 统一模型管理中心
+
+Model Hub 是单 owner 自托管的**模型控制面**（control plane）：在一处录入厂商凭证、维护五模态模型目录、按项目多对多分配；各项目通过 project token 拉取"被分配的模型"投影，然后**直连厂商**推理。
+
+> hub 不是推理网关：不经手推理流量、不做流式中转、不做集中扣费。终端用户 BYOK 永远留在各项目内，hub 不感知、不触碰。
+
+## 核心能力
+
+- **厂商凭证保险库**：预置 Ark Plan / Ark Platform / Agnes / Anthropic / OpenAI / OpenSpeech；凭证 AES-256-GCM 信封加密落库（`enc$v1$<kid>$<iv>$<ct>`），API 只回显掩码，支持轮换与 L1 连接测试。
+- **五模态模型目录**：text / image / video / audio / embedding，多维定价、端点与方言 adapter、LiteLLM 兼容命名；预置清单默认不勾选，strict overlay。
+- **分配与预算**：模型↔项目多对多，primary/fallback 角色、项目内 alias、日预算；整批保存，revision 自增。超预算自动切 fallback、熔断或由 kill switch 终止。
+- **配置下发与韧性**：`GET /pub/v1/models`（Bearer、revision/ETag/304）；项目侧 0600 本地缓存兜底，hub 宕机不影响运行。
+- **成本治理**：`GET /pub/v1/usage/summary` 预算读数、水位告警 webhook、成本看板（项目 × 来源 × 天 × 模型）；builtin 算钱、BYOK 只计量。
+
+## 使用流程
+
+录入厂商凭证（L1 测试验证）→ 维护模型目录 → 注册项目（token 哈希存储，明文只展示一次）→ 带护栏分配（角色 / alias / 日预算，整批保存）→ 项目用 model-kit 拉取投影（ETag/304、0600 缓存）并直连厂商推理、回传 usage → 管理台看成本与预算水位、跑 L1–L4 健康检查。
+
+## 关键差异点
+
+- 与推理网关不同：hub 只下发"哪些模型可用"的投影，从不坐在请求链路上；项目直连厂商。
+- 与多租户 SaaS 不同：单 owner 自托管，Docker compose 一键起，绑定 127.0.0.1，按内网 / Tailscale 暴露设计（Caddy 终止 HTTPS）。
+- 项目侧 model-kit 在 hub 宕机时用本地 0600 缓存兜底，配置故障不会扩散成推理故障。
+
+## 状态
+
+v0.1。已在 owner 自有多项目环境运行：zeus、loom、atlas、agent-world、job-agent 从同一个 hub 读取模型配置。
+
+## 链接
+
+- 落地页：https://model-hub.bayjf.com（English）· https://model-hub.bayjf.com/zh/（简体中文）〔域名待确认〕
+- 产品仓库：https://github.com/bayernjf/model-hub

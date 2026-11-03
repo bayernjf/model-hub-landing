@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Model Hub">
+  <rect x="3" y="3" width="26" height="26" rx="6" fill="#0a0f12" stroke="#384954"/>
+  <path d="M16 16L9 10" stroke="#35e0f0" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+  <path d="M16 16L23 10" stroke="#35e0f0" stroke-width="1.4" stroke-linecap="round" opacity="0.65"/>
+  <path d="M16 16L8.5 17.5" stroke="#35e0f0" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
+  <path d="M16 16L23.5 17.5" stroke="#35e0f0" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
+  <path d="M16 16L16 23" stroke="#35e0f0" stroke-width="1.4" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="9" cy="10" r="1.7" fill="#35e0f0"/>
+  <circle cx="23" cy="10" r="1.7" fill="#b467ff"/>
+  <circle cx="8.5" cy="17.5" r="1.7" fill="#66e07a"/>
+  <circle cx="23.5" cy="17.5" r="1.7" fill="#ff9d2e"/>
+  <circle cx="16" cy="23" r="1.7" fill="#35e0f0" opacity="0.8"/>
+  <rect x="13.4" y="13.4" width="5.2" height="5.2" rx="1.4" fill="#ffb020"/>
+</svg>
