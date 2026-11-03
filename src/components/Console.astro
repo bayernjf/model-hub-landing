@@ -1,0 +1,168 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const tabs = [
+  t("console.tab.dashboard"),
+  t("console.tab.providers"),
+  t("console.tab.models"),
+  t("console.tab.projects"),
+  t("console.tab.assignments"),
+  t("console.tab.costs"),
+  t("console.tab.knowledge"),
+];
+
+// Verbatim example shape from docs/cost-governance.md (GET /pub/v1/usage/summary).
+const sample = `{
+  "project": "zeus",
+  "day": "2026-10-31",
+  "models": [
+    {
+      "alias": "noul",
+      "role": "primary",
+      "model": "doubao-seed-1-6-250615",
+      "spent_micros": 420000,
+      "daily_budget_micros": 1000000,
+      "percent": 42
+    }
+  ],
+  "unassigned_spent_micros": 0
+}`;
+---
+
+<section class="console" id="console">
+  <div class="shell">
+    <p class="kicker">{t("console.kicker")}</p>
+    <h2 class="console__title">{t("console.title")}</h2>
+    <p class="console__sub">{t("console.sub")}</p>
+
+    <div class="panel console__window">
+      <div class="console__chrome">
+        <span class="console__lights" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+        <span class="console__wtitle">{t("console.windowTitle")}</span>
+      </div>
+      <div class="console__tabs" role="list">
+        {
+          tabs.map((tab, i) => (
+            <span class:list={["console__tab", { "is-active": i === 5 }]} role="listitem">
+              {tab}
+            </span>
+          ))
+        }
+      </div>
+      <div class="console__body">
+        <p class="console__label">{t("console.sampleLabel")}</p>
+        <pre class="console__code"><code>{sample}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .console {
+    padding: 56px 0;
+  }
+  .console__title {
+    margin-top: 14px;
+    font-size: clamp(26px, 3.6vw, 40px);
+  }
+  .console__sub {
+    margin-top: 12px;
+    color: var(--ink-dim);
+    max-width: 660px;
+  }
+  .console__window {
+    margin-top: 36px;
+    overflow: hidden;
+    background: var(--steel-850);
+  }
+  .console__chrome {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: var(--hair);
+    background: var(--steel-900);
+  }
+  .console__lights {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .console__lights i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--steel-500);
+  }
+  .console__lights i:first-child {
+    background: var(--alert);
+  }
+  .console__lights i:nth-child(2) {
+    background: var(--warn);
+  }
+  .console__lights i:last-child {
+    background: var(--ok);
+  }
+  .console__wtitle {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .console__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 8px 10px;
+    border-bottom: var(--hair);
+    background: var(--steel-900);
+  }
+  .console__tab {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    border: 1px solid transparent;
+  }
+  .console__tab.is-active {
+    color: var(--data);
+    border-color: var(--steel-600);
+    background: var(--steel-850);
+  }
+  .console__body {
+    padding: 22px;
+  }
+  .console__label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .console__code {
+    margin: 12px 0 0;
+    padding: 18px;
+    overflow-x: auto;
+    border: var(--hair);
+    border-radius: 8px;
+    background: var(--steel-950);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 640px) {
+    .console__body {
+      padding: 14px;
+    }
+    .console__code {
+      font-size: 11.5px;
+      padding: 14px;
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  { n: "01", title: t("flow.s1.t"), desc: t("flow.s1.d") },
+  { n: "02", title: t("flow.s2.t"), desc: t("flow.s2.d") },
+  { n: "03", title: t("flow.s3.t"), desc: t("flow.s3.d") },
+  { n: "04", title: t("flow.s4.t"), desc: t("flow.s4.d") },
+  { n: "05", title: t("flow.s5.t"), desc: t("flow.s5.d") },
+  { n: "06", title: t("flow.s6.t"), desc: t("flow.s6.d") },
+];
+---
+
+<section class="flow" id="workflow">
+  <div class="shell">
+    <p class="kicker">{t("flow.kicker")}</p>
+    <h2 class="flow__title">{t("flow.title")}</h2>
+    <p class="flow__sub">{t("flow.sub")}</p>
+    <ol class="flow__line">
+      {
+        steps.map((s) => (
+          <li class="flow__step">
+            <span class="flow__num">{s.n}</span>
+            <h3 class="flow__name">{s.title}</h3>
+            <p class="flow__desc">{s.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .flow {
+    padding: 56px 0;
+  }
+  .flow__title {
+    margin-top: 14px;
+    font-size: clamp(26px, 3.6vw, 40px);
+  }
+  .flow__sub {
+    margin-top: 12px;
+    color: var(--ink-dim);
+    max-width: 620px;
+  }
+  .flow__line {
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    counter-reset: step;
+  }
+  .flow__step {
+    position: relative;
+    padding: 22px 20px 20px;
+    border: var(--hair);
+    border-radius: 10px;
+    background: var(--steel-850);
+  }
+  .flow__step::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--data), transparent 70%);
+    opacity: 0.7;
+  }
+  .flow__num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--data);
+  }
+  .flow__name {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .flow__desc {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 900px) {
+    .flow__line {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .flow__line {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

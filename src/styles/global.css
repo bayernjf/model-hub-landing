@@ -1,0 +1,191 @@
+/* ============================================================
+   MODEL HUB — unified model control plane design system
+   Token block mirrors @bayjf/console-ui (the single source of
+   truth that the model-hub product itself consumes), so the
+   landing reads as the same surface as the admin console.
+   ============================================================ */
+
+@layer tokens {
+  :root {
+    /* structure — dark mill greys (console-ui canonical) */
+    --steel-950: #06090b;
+    --steel-900: #0a0f12;
+    --steel-850: #0f151a;
+    --steel-800: #141c22;
+    --steel-700: #1c262e;
+    --steel-600: #27343d;
+    --steel-500: #384954;
+    --steel-400: #566b78;
+
+    /* signal colors */
+    --power: #ffb020; /* budgets / decision gates */
+    --power-dim: #7a5310;
+    --data: #35e0f0; /* model & config flow */
+    --data-dim: #12626d;
+    --ok: #66e07a;
+    --warn: #ff9d2e;
+    --alert: #ff4a3d;
+    --plasma: #b467ff; /* adapters / modalities */
+
+    /* type — ink-faint follows the canonical AA-safe value */
+    --ink: #e8f0f4;
+    --ink-dim: #8ea2ad;
+    --ink-faint: #748894;
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: "PingFang SC", "Hiragino Sans GB", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    /* bevels — the industrial panel look */
+    --bevel: inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.6), inset 1px 0 0 rgba(255, 255, 255, 0.03),
+      inset -1px 0 0 rgba(0, 0, 0, 0.4);
+
+    --hair: 1px solid var(--steel-600);
+  }
+
+  :root:lang(en) {
+    --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--steel-950);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  /* a faint data-grid under everything */
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(53, 224, 240, 0.06), transparent 55%),
+    linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--data);
+  color: var(--steel-950);
+}
+
+/* ---------- layout ---------- */
+
+.shell {
+  width: min(1280px, 100% - 48px);
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(1280px, 100% - 32px);
+  }
+}
+
+/* ---------- reveal-on-scroll ---------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- shared bits ---------- */
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--data);
+  text-transform: uppercase;
+}
+
+.panel {
+  background: var(--steel-900);
+  border: var(--hair);
+  border-radius: 10px;
+  box-shadow: var(--bevel);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: 0;
+  transition: filter 160ms ease-out, transform 160ms ease-out;
+}
+
+.btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background: var(--data);
+  color: var(--steel-950);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: var(--hair);
+}

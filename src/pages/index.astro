@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hud from "../components/Hud.astro";
+import Hero from "../components/Hero.astro";
+import Capabilities from "../components/Capabilities.astro";
+import Boundary from "../components/Boundary.astro";
+import Workflow from "../components/Workflow.astro";
+import Console from "../components/Console.astro";
+import Fit from "../components/Fit.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <Hud />
+  <main>
+    <Hero />
+    <div data-reveal><Capabilities /></div>
+    <div data-reveal><Boundary /></div>
+    <div data-reveal><Workflow /></div>
+    <div data-reveal><Console /></div>
+    <div data-reveal><Fit /></div>
+    <div data-reveal><Cta /></div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,91 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const points = [
+  t("boundary.p1"),
+  t("boundary.p2"),
+  t("boundary.p3"),
+  t("boundary.p4"),
+];
+---
+
+<section class="boundary" id="boundary">
+  <div class="shell">
+    <div class="panel boundary__panel">
+      <div class="boundary__copy">
+        <p class="kicker">{t("boundary.kicker")}</p>
+        <h2 class="boundary__title">{t("boundary.title")}</h2>
+        <p class="boundary__sub">{t("boundary.sub")}</p>
+      </div>
+      <ul class="boundary__list">
+        {
+          points.map((p) => (
+            <li class="boundary__item">
+              <span class="boundary__mark" aria-hidden="true">
+                ∅
+              </span>
+              {p}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .boundary {
+    padding: 56px 0;
+  }
+  .boundary__panel {
+    padding: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 36px;
+    flex-wrap: wrap;
+    background:
+      radial-gradient(circle at 12% 110%, rgba(255, 77, 61, 0.06), transparent 50%),
+      var(--steel-900);
+  }
+  .boundary__copy {
+    flex: 1 1 300px;
+  }
+  .boundary__title {
+    margin-top: 14px;
+    font-size: clamp(24px, 3vw, 34px);
+  }
+  .boundary__sub {
+    margin-top: 12px;
+    color: var(--ink-dim);
+    max-width: 420px;
+  }
+  .boundary__list {
+    flex: 1 1 320px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+  .boundary__item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .boundary__mark {
+    font-family: var(--mono);
+    font-weight: 800;
+    color: var(--alert);
+  }
+  @media (max-width: 640px) {
+    .boundary__panel {
+      padding: 28px 22px;
+    }
+  }
+</style>
