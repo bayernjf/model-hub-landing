@@ -78,11 +78,10 @@ logo、评价、定价或性能数字；隐私/服务条款为占位文案，上
   - Environment variables：`NODE_VERSION = 22`、`PLAYWRIGHT_BROWSERS_PATH = 0`
 - 站点：`https://model-hub-landing.pages.dev`
 
-待办：
-
-- 自定义域名 `model-hub.bayjf.com`〔**待域名确认**〕：Pages 加 Custom Domain，
-  DNS 加 `CNAME model-hub → model-hub-landing.pages.dev`（Proxied）。
-- 域名定稿后同步 `src/consts.ts` 的 `SITE_URL` 与 `public/robots.txt` 的 Sitemap 地址。
+自定义域名 `model-hub.bayjf.com` 已通过 Pages API 绑定到本项目（2026-11-12），
+`src/consts.ts` 的 `SITE_URL` 与 `public/robots.txt` 的 Sitemap 地址已一致。
+DNS 侧需在 `bayjf.com` zone 加一条 `CNAME model-hub → model-hub-landing.pages.dev`
+（Proxied）；当前 Pages 域名状态为 pending，等 DNS 生效后自动签发证书。
 
 ## SEO
 
